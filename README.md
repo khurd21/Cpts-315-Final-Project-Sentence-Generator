@@ -16,7 +16,7 @@
 ---
 
 ## Table of Contents
-- [Markov Chain](#markovchain)
+- [Sentence Generator](#sentence-generator)
     - [A Sentence Generator](#a-sentence-generator-based-on-a-generic-source-text)
     - [Table of Contents](#table-of-contents)
     - [Document Revision History](#document-revision-history)
