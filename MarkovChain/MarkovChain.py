@@ -142,6 +142,11 @@ class MarkovChain:
         
         words = self.n_grams[seed]
         words = [word for word in words if not_ending_quote(word)] if not is_quote else words
+
+        # This is needed. If the text is primarily quotes it will make empty list.
+        if len(words) == 0:
+            words = self.n_grams[seed]
+
         word = random.choice(words)
         seed = tuple(list(seed[1:]) + [word])
         

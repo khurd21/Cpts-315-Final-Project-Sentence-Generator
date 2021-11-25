@@ -10,6 +10,8 @@
 
 HUNGER_GAMES_FILENAME = './data/hunger_games.txt'
 CRITIQUE_OF_PURE_REASON_FILENAME = './data/the_critique_of_pure_reason.txt'
+TWILIGHT = './data/twilight_formatted.txt'
+
 
 STOP_CHARACTERS = '.?!'
 STOP_WORDS = ['Dr.', 'Jr.', 'Sr.', 'Mr.', 'Mrs.', 'Ms.', 'Miss.', 'Prof.']

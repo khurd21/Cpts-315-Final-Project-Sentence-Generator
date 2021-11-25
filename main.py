@@ -11,9 +11,25 @@ import sys
 import constants
 from MarkovChain import MarkovChain
 
+
+NUM_SENTENCES = 20
+N = 3
+
+def format_results(title, file):
+    mc = MarkovChain(filenames=file if isinstance(file, list) else [file],
+                N=N,
+                stop_characters=constants.STOP_CHARACTERS,
+                stop_words=constants.STOP_WORDS
+                )
+    print(title)
+    for _ in range(NUM_SENTENCES):
+        print('-', mc.generate_sentence())
+    print()
+
+
 def main():
 
-    N = 3
+    global N
     args = sys.argv
     for arg in args:
         if 'N' in arg:
@@ -21,31 +37,23 @@ def main():
                 N=int(arg[1])
             except Exception:
                 print('Unable to determine N-value. Make sure in format: N<num>')
-    
-    hunger_games_mc = MarkovChain(filenames=[constants.HUNGER_GAMES_FILENAME],
-                        N=N,
-                        stop_characters=constants.STOP_CHARACTERS,
-                        stop_words=constants.STOP_WORDS
-                        )
 
-    print('From Hunger Games\n')
-    for _ in range(10):
-        print('-', hunger_games_mc.generate_sentence())
-    
-    del hunger_games_mc
+    book_titles = [
+            'From Hunger Games\n',
+            'From Kant\n',
+            'From Twilight\n',
+            ]
 
+    files_for_books = [
+            constants.HUNGER_GAMES_FILENAME,
+            constants.CRITIQUE_OF_PURE_REASON_FILENAME,
+            constants.TWILIGHT,
+            ]
+   
+    for title, file in zip(book_titles, files_for_books):
+        format_results(title, file)
 
-    hunger_games_kant_mc = MarkovChain(filenames=[constants.HUNGER_GAMES_FILENAME, constants.CRITIQUE_OF_PURE_REASON_FILENAME],
-                                N=N,
-                                stop_characters=constants.STOP_CHARACTERS,
-                                stop_words=constants.STOP_WORDS
-                                )
-
-    print('From Hunger Games and Kant\n')
-    for _ in range(10):
-        print('-', hunger_games_kant_mc.generate_sentence())
-
-
+    format_results('From Hunger Games, Kant, and Twilight\n', files_for_books)
     return
 
 
