@@ -9,6 +9,9 @@ __pycache__/
 # Jupyer Notebook
 .ipynb_checkpoints/
 
+# An output file for the results of the script.
+output.s
+
 # C extensions
 *.so
 
