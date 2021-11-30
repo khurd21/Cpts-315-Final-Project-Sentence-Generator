@@ -16,6 +16,10 @@ from functools import reduce
 
 FULL_QUOTE = '"'
 HALF_QUOTE = "'"
+
+# --verbosity is a argument variable when function is run, to determine if extra
+# information regarding the state of the MarkovChain should be displayed to the user
+# or not.
 VERBOSITY  = '--verbosity' in sys.argv
 
 

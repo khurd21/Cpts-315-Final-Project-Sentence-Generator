@@ -42,3 +42,7 @@ class TextSpecs:
         
         print(f'{Style.BRIGHT}{Fore.LIGHTGREEN_EX}{"#" * 18}' \
               f'{"#" * (len(str(self.num_unique_words)) + 1)}{Style.RESET_ALL}')
+
+    
+    def __repr__(self):
+        return f'<TextSpecs num_chars: {self.num_chars} num_words: {self.num_words} num_unique_words: {self.num_unique_words}'
