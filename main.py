@@ -13,7 +13,7 @@
 import sys
 
 import constants
-from MarkovChain import MarkovChain
+from MarkovChain import SentenceGenerator
 
 
 NUM_SENTENCES = 20
@@ -29,7 +29,7 @@ def format_sentences(title, file):
     file : list[str]
         a list of strings for which the source text is provided.
     '''
-    mc = MarkovChain(filenames=file if isinstance(file, list) else [file],
+    mc = SentenceGenerator(filenames=file if isinstance(file, list) else [file],
                 N=N,
                 stop_characters=constants.STOP_CHARACTERS,
                 stop_words=constants.STOP_WORDS

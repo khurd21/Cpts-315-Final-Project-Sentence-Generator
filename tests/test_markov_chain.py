@@ -34,15 +34,14 @@ class TestMarkovChain(unittest.TestCase):
                 )
 
     def test_text_specs(self):
-        specs = self.mc.specs
+        specs = self.mc
         assert specs.num_chars == 113
         assert specs.num_words == 22
         assert specs.num_unique_words == 16
 
 
     def test_starting_specs(self):
-        specs = self.mc_starter.specs
-        print(specs)
+        specs = self.mc_starter
         assert specs.num_chars == 79
         assert specs.num_words == 16
         assert specs.num_unique_words == 13

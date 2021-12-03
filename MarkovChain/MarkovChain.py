@@ -6,12 +6,11 @@
 # MarkovChain is a class used to suggest / generate new sentences based on
 # a given text(s). The files are given in a list as multiple texts can be used.
 ##################################
-import sys
 from .TextSpecs import TextSpecs
 
-import random
+
+import sys
 from colorama import Fore, Style
-from functools import reduce
 
 
 FULL_QUOTE = '"'
@@ -23,7 +22,7 @@ HALF_QUOTE = "'"
 VERBOSITY  = '--verbosity' in sys.argv
 
 
-class MarkovChain:
+class MarkovChain(TextSpecs):
 
 
     def __init__(self, filenames, N, stop_characters=None, stop_words=None):
@@ -34,32 +33,14 @@ class MarkovChain:
         self.stop_characters = stop_characters
         self.stop_words = stop_words
         self.N = N
-        self.specs = TextSpecs()
         self.build_chain()
-
-
-    def generate_sentence(self):
-        
-        length_sentence = random.randint(4, 15)  
-        seed = random.choice(self.starting_n_grams)
-        
-        
-        output = [x for x in seed]
-        is_quote = reduce(lambda base, word: (word[0] == FULL_QUOTE) or base, output, False)
-    
-        for _ in range(length_sentence):
-            word, seed = self._generate_word(seed, is_quote)
-            output.append(word)
-            
-        self._end_sentence(output, seed, is_quote)
-        return ' '.join(output)
 
 
     def display_specs(self):
             print(f'{Style.BRIGHT}Files:{Style.RESET_ALL}')
             for filename in self.filenames:
                 print(f'{Style.BRIGHT}{Fore.LIGHTRED_EX}-{Style.RESET_ALL} {filename}')
-            self.specs.display_specs()
+            super().display_specs()
 
 
     def build_chain(self):
@@ -78,7 +59,7 @@ class MarkovChain:
                 chars = f.read()
                 words = chars.split()
                 unique_words = set(words)
-                self.specs._populate(len(chars), len(words), len(unique_words))
+                self._populate(len(chars), len(words), len(unique_words))
                 self.initial_words.extend(words)
 
         if VERBOSITY:
@@ -138,36 +119,3 @@ class MarkovChain:
             for n_gram in self.starting_n_grams[:10]:
                 print(f'{Style.BRIGHT}- {Style.RESET_ALL}{Fore.LIGHTGREEN_EX}{n_gram}{Style.RESET_ALL}')
             print()
-
-
-    def _generate_word(self, seed, is_quote=False):
-    
-        not_ending_quote = lambda word: word[-1] != FULL_QUOTE
-        
-        words = self.n_grams[seed]
-        words = [word for word in words if not_ending_quote(word)] if not is_quote else words
-
-        # This is needed. If the text is primarily quotes it will make empty list.
-        if len(words) == 0:
-            words = self.n_grams[seed]
-
-        word = random.choice(words)
-        seed = tuple(list(seed[1:]) + [word])
-        
-        return word, seed
-    
-
-    def _end_sentence(self, output, seed, is_quote=False):
-        
-        in_stop_characters = lambda word: word[-1] in self.stop_characters
-        in_stop_words      = lambda word: word in self.stop_words
-        
-        while not (end := [word for word in self.n_grams[seed] if in_stop_characters(word) and not in_stop_words(word)]):
-            word, seed = self._generate_word(seed, is_quote)
-            is_quote |= word[0] == FULL_QUOTE  # if quote at beginning, make true.
-            is_quote &= word[-1] != FULL_QUOTE # if quote at end, make false.
-            output.append(word)
-            
-        word = random.choice(end)
-        n_gram = tuple(list(seed[1:]) + [word])
-        output.append(word)
