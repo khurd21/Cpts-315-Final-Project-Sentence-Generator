@@ -10,8 +10,9 @@
 
 HUNGER_GAMES_FILENAME = './data/hunger_games.txt'
 CRITIQUE_OF_PURE_REASON_FILENAME = './data/the_critique_of_pure_reason.txt'
-TWILIGHT = './data/twilight_formatted.txt'
+TWILIGHT = './data/twilight.txt'
 FIFTY_SHADES_OF_GRAY = './data/50_shades_of_gray.txt'
+LORD_OF_THE_RINGS = './data/lord_of_the_rings.txt'
 
 
 STOP_CHARACTERS = '.?!'

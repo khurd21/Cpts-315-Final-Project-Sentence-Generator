@@ -37,7 +37,7 @@ def format_sentences(title, file):
     print(title)
     for _ in range(NUM_SENTENCES):
         print('-', mc.generate_sentence())
-    print()
+    print('\n********************************************\n')
 
 
 def main():
@@ -53,22 +53,22 @@ def main():
 
     book_titles = [
             'From Hunger Games\n',
-            'From Kant\n',
             'From Twilight\n',
-            'From 50 Shades of Gray',
+            'From 50 Shades of Gray\n',
+            'From Lord of the Rings\n',
             ]
 
     files_for_books = [
             constants.HUNGER_GAMES_FILENAME,
-            constants.CRITIQUE_OF_PURE_REASON_FILENAME,
             constants.TWILIGHT,
             constants.FIFTY_SHADES_OF_GRAY,
+            constants.LORD_OF_THE_RINGS,
             ]
    
     for title, file in zip(book_titles, files_for_books):
         format_sentences(title, file)
 
-    format_sentences('From Hunger Games, Kant, Twilight, and 50 Shades\n', files_for_books)
+    format_sentences('From Hunger Games, Twilight, 50 Shades and Lord of the Rings\n', files_for_books)
     return
 
 
