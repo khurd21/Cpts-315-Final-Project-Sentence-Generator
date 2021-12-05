@@ -22,9 +22,9 @@ class SentenceGenerator(MarkovChain):
         super().__init__(filenames, N, stop_characters=stop_characters, stop_words=stop_words)
 
     
-    def generate_sentence(self):
+    def generate_sentence(self, len: int=None):
         
-        length_sentence = random.randint(4, 15)  
+        length_sentence = random.randint(4, 15) if len is None else len
         seed = random.choice(self.starting_n_grams)
         
         
@@ -47,7 +47,7 @@ class SentenceGenerator(MarkovChain):
         words = [word for word in words if not_ending_quote(word)] if not is_quote else words
 
         # This is needed. If the text is primarily quotes it will make empty list.
-        if len(words) == 0:
+        if not len(words):
             words = self.n_grams[seed]
 
         word = random.choice(words)
@@ -68,5 +68,4 @@ class SentenceGenerator(MarkovChain):
             output.append(word)
             
         word = random.choice(end)
-        n_gram = tuple(list(seed[1:]) + [word])
         output.append(word)
