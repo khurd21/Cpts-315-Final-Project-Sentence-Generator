@@ -1,3 +1,3 @@
-from MarkovChain.TextSpecs import TextSpecs
-from MarkovChain.MarkovChain import MarkovChain
-from MarkovChain.SentenceGenerator import SentenceGenerator
+from .TextSpecs import TextSpecs
+from .MarkovChain import MarkovChain
+from .SentenceGenerator import SentenceGenerator
