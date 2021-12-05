@@ -17,6 +17,7 @@ from MarkovChain import SentenceGenerator
 
 
 NUM_SENTENCES = 20
+NUM_PARAGRAPHS = 3
 N = 3
 
 def format_sentences(title, file):
@@ -29,14 +30,20 @@ def format_sentences(title, file):
     file : list[str]
         a list of strings for which the source text is provided.
     '''
-    mc = SentenceGenerator(filenames=file if isinstance(file, list) else [file],
+    sg = SentenceGenerator(filenames=file if isinstance(file, list) else [file],
                 N=N,
                 stop_characters=constants.STOP_CHARACTERS,
                 stop_words=constants.STOP_WORDS
                 )
     print(title)
     for _ in range(NUM_SENTENCES):
-        print('-', mc.generate_sentence())
+        print('-', sg.generate_sentence())
+
+    print(); print(); print(f'Generated Paragraphs:\n')
+
+    for _ in range(NUM_PARAGRAPHS):
+        print(sg.generate_paragraph()); print()
+
     print('\n********************************************\n')
 
 

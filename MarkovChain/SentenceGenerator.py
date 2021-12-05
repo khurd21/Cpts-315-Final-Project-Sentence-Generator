@@ -38,6 +38,15 @@ class SentenceGenerator(MarkovChain):
         self._end_sentence(output, seed, is_quote)
         return ' '.join(output)
 
+    
+    def generate_paragraph(self, len: int=None):
+
+        num_sentences = random.randint(5,20)
+        output = []
+        for _ in range(num_sentences):
+            output.append(self.generate_sentence())
+        return ' '.join(output)
+
 
     def _generate_word(self, seed, is_quote=False):
     
