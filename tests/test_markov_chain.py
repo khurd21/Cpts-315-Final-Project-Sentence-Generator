@@ -85,3 +85,17 @@ class TestMarkovChain(unittest.TestCase):
         assert len(n_gram_list) == len(expected_output)
         for expected, actual in zip(expected_output, n_gram_list):
             assert expected == actual
+
+    
+    def test_n_gram_buckets(self):
+        output = self.mc.n_grams[('and', 'how', 'many')]
+        expected_outputs = ['words', 'unique']
+
+        assert len(self.mc.n_grams.keys()) == 18
+        assert len(output) == len(expected_outputs)
+        for expected, actual in zip(expected_outputs, output):
+            assert expected == actual
+
+        assert self.mc.n_grams[('how', 'many', 'words')] == ['and']
+        assert self.mc.n_grams[('This', 'is', 'text')] == ['to']
+        assert self.mc.n_grams.get(('this', 'is', 'text')) is None
