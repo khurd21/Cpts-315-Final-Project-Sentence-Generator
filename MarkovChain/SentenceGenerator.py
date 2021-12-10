@@ -56,7 +56,7 @@ class SentenceGenerator(MarkovChain):
         words = [word for word in words if not_ending_quote(word)] if not is_quote else words
 
         # This is needed. If the text is primarily quotes it will make empty list.
-        if not len(words):
+        if not words:
             words = self.n_grams[seed]
 
         word = random.choice(words)
@@ -70,7 +70,9 @@ class SentenceGenerator(MarkovChain):
         in_stop_characters = lambda word: word[-1] in self.stop_characters
         in_stop_words      = lambda word: word in self.stop_words
         
-        while not (end := [word for word in self.n_grams[seed] if in_stop_characters(word) and not in_stop_words(word)]):
+        while not ((end := [word for word in self.n_grams[seed] if in_stop_characters(word) and not in_stop_words(word)]) \
+                        and not is_quote
+                        ):
             word, seed = self._generate_word(seed, is_quote)
             is_quote |= word[0] == FULL_QUOTE  # if quote at beginning, make true.
             is_quote &= word[-1] != FULL_QUOTE # if quote at end, make false.

@@ -16,6 +16,10 @@ import constants
 from MarkovChain import SentenceGenerator
 
 
+VERSION = (3,9)
+if sys.version_info < VERSION:
+    print('Python version 3.9.8 was used to implement. Some things may not work below this version.')
+
 NUM_SENTENCES = 20
 NUM_PARAGRAPHS = 3
 N = 3
