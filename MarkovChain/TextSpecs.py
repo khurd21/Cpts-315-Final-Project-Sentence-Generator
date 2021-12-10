@@ -15,18 +15,27 @@ from colorama import Fore, Style
 
 @dataclass
 class TextSpecs:
+    '''A dataclass that stores how many chars, words, and unique words exist from a given source text.
+    '''
     num_chars: int = 0
     num_words: int = 0
     num_unique_words: int = 0
 
     
     def _populate(self, num_chars: int, num_words: int, num_unique_words: int):
+        '''Adds to the current value of each variable. 
+
+        Using augmented assignment allows user to continue to add more words / text
+        at a later time and continuously update the specs.
+        '''
         self.num_chars += num_chars
         self.num_words += num_words
         self.num_unique_words += num_unique_words
 
 
     def clear(self):
+        '''Resets the specs.
+        '''
         self.num_chars = 0
         self.num_words = 0
         self.num_unique_words = 0

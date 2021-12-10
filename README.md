@@ -31,6 +31,7 @@
 | Name | Date | Changes | Version |
 | ------ | ------ | --------- | --------- |
 |Revision 1 | 2021-11-25 | Initial working product | 1.0 |
+|Revision 2 | 2021-12-10 | Grammar alterations     | 1.0.1 |
 
 <br><br>
 
@@ -39,9 +40,9 @@
 This program was designed as a final project for `Computer Science 315 - 
 Introduction to Data Mining`. The project reads in a long source text and
 makes new sentence suggestions based on the text. This word generator is
-implemented using Markov Chain and N-Grams. A description of the implementation
-with outputs from the functions can be seen within the
-[Jupyter-Notebook](MarkovChain.ipynb) on the root page of this project.
+implemented using Markov Chain and N-Grams. A report
+with outputs from the functions can be seen in the
+[Jupyter-Notebook](ReportSentenceGenerator.ipynb) on the root page of this project.
 
 # 2. Example Use
 

@@ -17,12 +17,34 @@ HALF_QUOTE = '"'
 
 
 class SentenceGenerator(MarkovChain):
+    '''Generates sentences or paragraphs based on given source text.
+
+    :param MarkovChain: Inherited class that generates the chain to generate sentences.
+    '''
 
     def __init__(self, filenames, N, stop_characters=None, stop_words=None):
+        '''Calls constructor for base class MarkovChain.
+
+        :param filenames: the files to load into the object.
+        :type filenames: list[str] | str
+        :param N: Size of the n-gram
+        :type N: int
+        :param stop_characters: characters for which a sentence will end on, defaults to None
+        :type stop_characters: str, optional
+        :param stop_words: words which may contain a stop character, defaults to None
+        :type stop_words: list[str], optional
+        '''
         super().__init__(filenames, N, stop_characters=stop_characters, stop_words=stop_words)
 
     
     def generate_sentence(self, len: int=None):
+        '''Generates a sentence based on the supplied source texts.
+
+        :param len: length of the sentence, random length if not supplied, defaults to None
+        :type len: int, optional
+        :return: The generated sentence.
+        :rtype: str
+        '''
         
         length_sentence = random.randint(4, 15) if len is None else len
         seed = random.choice(self.starting_n_grams)
@@ -40,6 +62,13 @@ class SentenceGenerator(MarkovChain):
 
     
     def generate_paragraph(self, len: int=None):
+        '''Generates a paragraph based on the supplied source texts.
+
+        :param len: length of the sentence, random length if not supplied, defaults to None
+        :type len: int, optional
+        :return: The generated sentence.
+        :rtype: str
+        '''
 
         num_sentences = random.randint(5,20)
         output = []
@@ -49,6 +78,15 @@ class SentenceGenerator(MarkovChain):
 
 
     def _generate_word(self, seed, is_quote=False):
+        '''Generates a word based on given seed. Updates seed after generating word.
+
+        :param seed: The key for a specific bucket of words
+        :type seed: tuple
+        :param is_quote: determine if word to be generated is in the middle of a quote, defaults to False
+        :type is_quote: bool, optional
+        :return: word, seed
+        :rtype: str, tuple
+        '''
     
         not_ending_quote = lambda word: word[-1] != FULL_QUOTE
         
@@ -66,6 +104,15 @@ class SentenceGenerator(MarkovChain):
     
 
     def _end_sentence(self, output, seed, is_quote=False):
+        '''Works toward ending a sentence by finsihing quotes and stopping on a stop character.
+
+        :param output: The list of words already generated
+        :type output: list[str]
+        :param seed: seed from previous generated word
+        :type seed: tuple
+        :param is_quote: determine if word to be generated is in the middle of a quote, defaults to False
+        :type is_quote: bool, optional
+        '''
         
         in_stop_characters = lambda word: word[-1] in self.stop_characters
         in_stop_words      = lambda word: word in self.stop_words

@@ -23,6 +23,11 @@ VERBOSITY  = '--verbosity' in sys.argv
 
 
 class MarkovChain(TextSpecs):
+    '''Stores the n-grams, starting n-grams, filenames, stop characters and words, and size of N.
+    The constructor automatically builds the n-grams from the provided files.
+
+    :param TextSpecs: Inherited class that keeps track of the number of characters, words, and unique words.
+    '''
 
 
     def __init__(self, filenames, N, stop_characters=None, stop_words=None):
@@ -37,22 +42,34 @@ class MarkovChain(TextSpecs):
 
 
     def display_specs(self):
-            print(f'{Style.BRIGHT}Files:{Style.RESET_ALL}')
-            for filename in self.filenames:
-                print(f'{Style.BRIGHT}{Fore.LIGHTRED_EX}-{Style.RESET_ALL} {filename}')
-            super().display_specs()
+        '''Displays files used for MarkovChain and then displays the TextSpecs information.
+        '''
+        print(f'{Style.BRIGHT}Files:{Style.RESET_ALL}')
+        for filename in self.filenames:
+            print(f'{Style.BRIGHT}{Fore.LIGHTRED_EX}-{Style.RESET_ALL} {filename}')
+        super().display_specs()
 
 
     def build_chain(self):
+        '''A wrapper to build the MarkovChain.
+
+        Reinitializes the starting_n_grams, intital_words and n_grams to be empty
+        before re-initializing the words and n_grams.
+        '''
         self.starting_n_grams = []
         self.initial_words = []
         self.n_grams = {}
+        self.clear()
         self._init_words()
         self._create_ngram_dict()
         self._create_starting_ngrams_list()
   
 
     def _init_words(self):
+        '''Populates the initial_words with all the words from each file and retrieves
+        num_chars, num_words, and num_unique_words information for TextSpecs to add to its
+        specs.
+        '''
 
         for filename in self.filenames:
             with open(filename, 'r') as f:
@@ -72,11 +89,13 @@ class MarkovChain(TextSpecs):
     
 
     def _create_ngram_dict(self):
+        '''Populates the n-gram dictionary and also fills the buckets with next word beyond n-gram.
+        '''
         n_grams = zip(*[self.initial_words[i:] for i in range(self.N + 1)])
         for n_gram in n_grams:
             key = n_gram[:self.N]
             next_word = n_gram[-1]
-            self.n_grams[key] = self.n_grams.get(key, []) + [next_word]
+            self.n_grams[key] = self.n_grams.get(key, []) + [next_word] # Adding next word to bucket.
         
         if VERBOSITY:
 
@@ -103,6 +122,8 @@ class MarkovChain(TextSpecs):
 
 
     def _create_starting_ngrams_list(self):
+        '''Starting n-grams are those with capitalizations or quotes, and not a stopword.
+        '''
 
         is_valid        = lambda g: g[0] not in self.stop_words \
                             and (g[1][0].isupper() or g[1][0] in [FULL_QUOTE, HALF_QUOTE])
